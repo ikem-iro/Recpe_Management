@@ -17,7 +17,7 @@ async def root():
     return {"message": "Hello World"}
 
 
-@router.get("/get_all_recipe")
+@router.get("/get_all_recipes")
 async def get_all_recipe(response: Response):
     data = get_recipes()
     response.status_code = 200
@@ -27,6 +27,9 @@ async def get_all_recipe(response: Response):
 @router.get("/get_recipe/{recipe_name}")
 async def get_recipe(recipe_name: str, response: Response):
     data = get_one_recipe(recipe_name)
+    if data == {"Error": "Recipe not found"}:
+        response.status_code = 404
+        return {"response": data}
     response.status_code = 200
     return {"response": data}
 
@@ -40,18 +43,21 @@ async def create_recipe(recipe: Recipe, response: Response):
 
 
 @router.patch("/edit_recipe/{recipe_name}")
-async def edit_a_recipe(recipe_name: str, recipe: Recipe):
+async def edit_a_recipe(recipe_name: str, recipe: Recipe, response:Response):
     data = edit_recipe(recipe_name, recipe)
     if data == {"Error": "Recipe not found"}:
+        response.status_code = 404
         return {"response": data}
 
-    # response.status_code = 200
-    return {"response": data}
+    response.status_code = 200
+    return {"response": "The recipe has been edited."}
 
 
 @router.delete("/delete_recipe/{recipe_name}")
-async def delete_a_recipe(recipe_name: str):
+async def delete_a_recipe(recipe_name: str, response: Response):
     data = delete_recipe(recipe_name)
-
-    # response.status_code = 200
-    return {"response": data}
+    if data == {"Error": "Recipe not found"}:
+        response.status_code = 404
+        return {"response": data}
+    response.status_code = 200
+    return {"response": "Successfully deleted"}
