@@ -69,28 +69,16 @@ def edit_recipe(recipe_name, recipe):
     if recipe_to_modify is None:
         return {"Error": "Recipe not found"}
 
-    # Update recipe attributes
-    original_id = recipe_to_modify["_id"]
-    original_created_at = recipe_to_modify["timestamps"]["created_at"]
-    if recipe_to_modify["name"] != recipe.recipe_name:
-        recipe_to_modify["name"] = recipe.recipe_name
-    if recipe_to_modify["ingredients"] != recipe.ingredients.ingredient:
-        recipe_to_modify["ingredients"] = recipe.ingredients.ingredient
-    if recipe_to_modify["instructions"] != recipe.instructions:
-        recipe_to_modify["instructions"] = recipe.instructions
-    if recipe_to_modify["category"] != recipe.nutritional_info:
-        recipe_to_modify["category"] = recipe.nutritional_info  # Assuming recipe.category corresponds to the category attribute
+    # Update the attributes of the existing recipe object
+    recipe_to_modify["name"] = recipe.recipe_name
+    recipe_to_modify["ingredients"] = recipe.ingredients.ingredient
+    recipe_to_modify["instructions"] = recipe.instructions
+    recipe_to_modify["category"] = recipe.nutritional_info  # Assuming recipe.category corresponds to the category attribute
     recipe_to_modify["timestamps"]["updated_at"] = datetime.now(timezone.utc).isoformat()
-    recipe_to_modify["_id"] = original_id
-    recipe_to_modify["timestamps"]["created_at"] = original_created_at
-
-    index = recipes.index(recipe_to_modify)
-    recipes[index] = recipe_to_modify
 
     # Write modified recipes back to the file
     message = write_to_file(recipes)
     return message
-
 
 
 def delete_recipe(recipe):
