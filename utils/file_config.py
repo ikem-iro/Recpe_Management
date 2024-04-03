@@ -10,6 +10,9 @@ file_path = os.path.join(file_directory, file)
 
 
 def create_file():
+    """
+    A function to create a file if it doesn't exist and read/write recipe data to it.
+    """
     global RECIPES
     global file_directory
 
@@ -33,6 +36,10 @@ def create_file():
 
 
 def read_file():
+    """
+    This function reads a file from the specified file path and loads the content as JSON.
+    It returns the loaded JSON data.
+    """
 
     with open(file_path, "r") as f:
         data = f.read()
@@ -43,6 +50,15 @@ def read_file():
 
 
 def write_to_file(data):
+    """
+    Write the provided data to a file specified by the file path.
+
+    Parameters:
+    - data: the data to be written to the file
+
+    Returns:
+    - A dictionary with a message indicating the write status
+    """
     RECIPES = data
 
     with open(file_path, "w") as f:
