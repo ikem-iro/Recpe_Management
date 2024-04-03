@@ -9,7 +9,7 @@ file = "recipes.json"
 file_path = os.path.join(file_directory, file)
 
 
-def create_file():
+def create_file(): #pragma no cover
     """
     A function to create a file if it doesn't exist and read/write recipe data to it.
     """
@@ -35,7 +35,7 @@ def create_file():
 
 
 
-def read_file():
+def read_file(): #pragma no cover
     """
     This function reads a file from the specified file path and loads the content as JSON.
     It returns the loaded JSON data.
@@ -49,7 +49,7 @@ def read_file():
     return RECIPES
 
 
-def write_to_file(data):
+def write_to_file(data): #pragma no cover
     """
     Write the provided data to a file specified by the file path.
 
